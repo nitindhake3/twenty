@@ -39,4 +39,16 @@ describe('sortViewSortsByCreation', () => {
       'oldest-sort',
     ]);
   });
+
+  it('supports ISO string timestamps for createdAt', () => {
+    const viewSorts = [
+      { id: 'second-sort', createdAt: '2026-01-01T00:00:01.000Z' },
+      { id: 'first-sort', createdAt: '2026-01-01T00:00:00.000Z' },
+    ];
+
+    expect(sortViewSortsByCreation(viewSorts).map(({ id }) => id)).toEqual([
+      'first-sort',
+      'second-sort',
+    ]);
+  });
 });
