@@ -621,13 +621,19 @@ export class ComputeApplicationManifestAllUniversalFlatEntityMapsService {
         });
       }
 
-      for (const viewSortManifest of viewManifest.sorts ?? []) {
+      for (const [index, viewSortManifest] of (
+        viewManifest.sorts ?? []
+      ).entries()) {
+        const sortCreatedAt = new Date(
+          new Date(now).getTime() + index * 1000,
+        ).toISOString();
+
         addUniversalFlatEntityToUniversalFlatEntityMapsThroughMutationOrThrow({
           universalFlatEntity: fromViewSortManifestToUniversalFlatViewSort({
             viewSortManifest,
             viewUniversalIdentifier: viewManifest.universalIdentifier,
             applicationUniversalIdentifier,
-            now,
+            now: sortCreatedAt,
           }),
           universalFlatEntityMapsToMutate:
             allUniversalFlatEntityMaps.flatViewSortMaps,

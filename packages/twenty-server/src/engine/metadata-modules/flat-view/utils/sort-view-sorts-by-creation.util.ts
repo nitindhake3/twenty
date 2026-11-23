@@ -1,10 +1,11 @@
 export const sortViewSortsByCreation = <
-  TViewSort extends { id: string; createdAt: Date },
+  TViewSort extends { id: string; createdAt: Date | string },
 >(
   viewSorts: TViewSort[],
 ): TViewSort[] =>
   [...viewSorts].sort(
     (firstViewSort, secondViewSort) =>
-      firstViewSort.createdAt.getTime() - secondViewSort.createdAt.getTime() ||
+      new Date(firstViewSort.createdAt).getTime() -
+        new Date(secondViewSort.createdAt).getTime() ||
       firstViewSort.id.localeCompare(secondViewSort.id),
   );
